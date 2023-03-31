@@ -1,4 +1,8 @@
-# mzClustering
+# Deep mzClustering
+
+Fork of the [mzClustering](https://github.com/DanGuo1223/mzClustering) software & algorithm by Tim Daniel Rose.
+The software is being/has been adapted to work with varying image sizes and imrove comparibility with METASPACE datasets.
+
 This repository contains R implementation of MSI data preprocessing, visualization, and spatial centroid segmentation using package `Cardinal` and Python implementation of $m/z$ clustering using convolutional neural network based deep clustering method.
 
 ## $m/z$ clustering

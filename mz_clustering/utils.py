@@ -12,10 +12,23 @@ def clustering_acc(y_true, y_pred):
     ind = linear_assignment(w.max() - w)
 
     return sum([w[i, j] for i, j in ind]) * 1.0 / y_pred.size
+
+
 def NMI(y_true, y_pred):
     return metrics.normalized_mutual_info_score(y_true, y_pred)
+
+
 def ARI(y_true, y_pred):
     return metrics.adjusted_rand_score(y_true, y_pred)
+
+
+# Define a function to make a symmetric matrix from a non-symmetric matrix
+def make_symmetric(matrix):
+    # Use the maximum of the matrix and its transpose to make it symmetric
+    symmetric_matrix = np.maximum(matrix, matrix.T)
+
+    # Return the resulting symmetric matrix
+    return symmetric_matrix
 
 """
 Import linear_assignment function

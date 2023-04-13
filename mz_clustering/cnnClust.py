@@ -74,7 +74,6 @@ class cnnClust(nn.Module):
         x = self.conv4(x)
         x = self.conv5(x)
         x = self.conv6(x)
-        print(x.shape)
         x = x.view(-1, self.final_conv_dim)
         x = self.fc(x)
 

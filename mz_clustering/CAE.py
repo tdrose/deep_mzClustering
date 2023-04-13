@@ -108,11 +108,11 @@ class CAE(nn.Module):
         x = self.conv1(x)
         x = self.conv2(x)
         x = x.view(x.size(0), -1)
-        print(x.shape)
-        print(self.l2height)
-        print(self.l2width)
-        print(self.d2)
-        print(self.l2height*self.l2width*self.d2)
+        # print(x.shape)
+        # print(self.l2height)
+        # print(self.l2width)
+        # print(self.d2)
+        # print(self.l2height*self.l2width*self.d2)
         x = self.encoder(x)
         return x
 

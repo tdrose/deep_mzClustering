@@ -5,7 +5,7 @@ import torch.nn.functional as functional
 from random import sample
 from sklearn import manifold
 # from time import time
-import seaborn as sns
+# import seaborn as sns
 
 from .CAE import CAE
 from .cnnClust import cnnClust
@@ -224,18 +224,18 @@ class Clustering(object):
 
         return nmi, ari, acc, pred_label
 
-    def tsne_viz(self, pred_label):
-        x = np.reshape(self.image_data, (-1, self.height*self.width))
-        tsne = manifold.TSNE(n_components=2, init='pca', random_state=0)
-        # t0 = time()
-        x_tsne = tsne.fit_transform(x)
-        print('plot embedding')
-        plt.figure(figsize=(5, 3.5))
-        sns.scatterplot(
-            x=x_tsne[:, 0], y=x_tsne[:, 1],
-            hue=pred_label,
-            palette=sns.color_palette("hls", self.num_cluster),
-            legend="full"
-        )
-        plt.xlabel('TSNE 1')
-        plt.ylabel('TSNE 2')
+    # def tsne_viz(self, pred_label):
+    #     x = np.reshape(self.image_data, (-1, self.height*self.width))
+    #     tsne = manifold.TSNE(n_components=2, init='pca', random_state=0)
+    #     # t0 = time()
+    #     x_tsne = tsne.fit_transform(x)
+    #     print('plot embedding')
+    #     plt.figure(figsize=(5, 3.5))
+    #     sns.scatterplot(
+    #         x=x_tsne[:, 0], y=x_tsne[:, 1],
+    #         hue=pred_label,
+    #         palette=sns.color_palette("hls", self.num_cluster),
+    #         legend="full"
+    #     )
+    #     plt.xlabel('TSNE 1')
+    #     plt.ylabel('TSNE 2')

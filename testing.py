@@ -1,6 +1,6 @@
 from mz_clustering.CAE import conv2d_hout, conv2d_hwout, conv2d_wout, CAE
-from cnnClust import cnnClust
-from clustering import Clustering
+from mz_clustering.cnnClust import cnnClust
+from mz_clustering.clustering import Clustering
 import numpy as np
 import torch
 import torch.nn.functional as functional

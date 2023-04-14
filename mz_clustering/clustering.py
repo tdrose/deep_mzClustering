@@ -177,6 +177,9 @@ class Clustering(object):
                 # However knn should be with x instead of y (see formula 4)
                 pos_loc, neg_loc = pseudo_labeling(ub=ub, lb=lb, sim=sim_numpy, index=index, knn=self.KNN,
                                                    knn_adj=self.knn_adj)
+                pos_loc = pos_loc.to(self.device)
+                neg_loc = neg_loc.to(self.device)
+
                 pos_entropy = torch.mul(-torch.log(torch.clip(sim_mat, 1e-10, 1)), pos_loc)
                 neg_entropy = torch.mul(-torch.log(torch.clip(1-sim_mat, 1e-10, 1)), neg_loc)
 

@@ -7,10 +7,10 @@ from sklearn import manifold
 # from time import time
 import seaborn as sns
 
-from CAE import CAE
-from cnnClust import cnnClust
-from pseudo_labeling import pseudo_labeling, run_knn
-from utils import clustering_acc, NMI, ARI
+from .CAE import CAE
+from .cnnClust import cnnClust
+from .pseudo_labeling import pseudo_labeling, run_knn
+from .utils import clustering_acc, NMI, ARI
 import matplotlib.pyplot as plt
 
 

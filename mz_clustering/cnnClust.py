@@ -1,5 +1,5 @@
 import torch.nn as nn
-from CAE import conv2d_hwout
+from .CAE import conv2d_hwout
 
 
 class cnnClust(nn.Module):

@@ -2,7 +2,7 @@ import torch
 from typing import Tuple
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
-from utils import make_symmetric
+from .utils import make_symmetric
 
 
 def run_knn(features, k=10):

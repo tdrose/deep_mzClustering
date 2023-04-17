@@ -25,12 +25,13 @@ def pseudo_labeling(ub: float, lb: float,
     neg_loc = (sim <= lb).astype("float64")
 
     if knn:
-
         knn_submat = knn_adj[np.ix_(index, index)]
         # Todo: Not 100% sure with this one, should be checked again
         pos_loc = torch.tensor(np.maximum(pos_loc, knn_submat))
         neg_loc = torch.tensor(np.minimum(neg_loc, 1-knn_submat))
 
-        pass
+    else:
+        pos_loc = torch.tensor(pos_loc)
+        neg_loc = torch.tensor(neg_loc)
 
     return pos_loc, neg_loc

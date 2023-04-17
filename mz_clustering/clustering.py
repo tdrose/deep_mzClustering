@@ -202,27 +202,40 @@ class Clustering(object):
     def inference(self, cae, clust):
         with torch.no_grad():
             pred_label = list()
-            for it in range(len(self.image_data)//self.batch_size):
 
-                train_x, train_y = self.get_batch_sequential(self.image_data, self.image_label, self.sampleN, it)
+            test_x = torch.Tensor(self.image_data).to(self.device)
+            test_x = test_x.reshape((-1, 1, self.height, self.width))
 
-                train_x = torch.Tensor(train_x).to(self.device)
-                train_x = train_x.reshape((-1, 1, self.height, self.width))
+            x_p = cae(test_x)
+            psuedo_label = clust(x_p)
 
-                x_p = cae(train_x)
-                psuedo_label = clust(x_p)
-
-                psuedo_label = torch.argmax(psuedo_label, dim=1)
-                pred_label.extend(psuedo_label.cpu().detach().numpy())
-
+            psuedo_label = torch.argmax(psuedo_label, dim=1)
+            pred_label.extend(psuedo_label.cpu().detach().numpy())
             pred_label = np.array(pred_label)
-            acc = clustering_acc(train_y, pred_label)
 
-            nmi = NMI(train_y, pred_label)
-            ari = ARI(train_y, pred_label)
-            print('testing NMI, ARI, ACC is %f, %f, %f.' % (nmi, ari, acc))
+            return pred_label
 
-        return nmi, ari, acc, pred_label
+            # for it in range(len(self.image_data)//self.batch_size):
+            #
+            #     train_x, train_y = self.get_batch_sequential(self.image_data, self.image_label, self.sampleN, it)
+            #
+            #     train_x = torch.Tensor(train_x).to(self.device)
+            #     train_x = train_x.reshape((-1, 1, self.height, self.width))
+            #
+            #     x_p = cae(train_x)
+            #     psuedo_label = clust(x_p)
+            #
+            #     psuedo_label = torch.argmax(psuedo_label, dim=1)
+            #     pred_label.extend(psuedo_label.cpu().detach().numpy())
+            #
+            # pred_label = np.array(pred_label)
+            # acc = clustering_acc(train_y, pred_label)
+            #
+            # nmi = NMI(train_y, pred_label)
+            # ari = ARI(train_y, pred_label)
+            # print('testing NMI, ARI, ACC is %f, %f, %f.' % (nmi, ari, acc))
+
+            # return nmi, ari, acc, pred_label
 
     # def tsne_viz(self, pred_label):
     #     x = np.reshape(self.image_data, (-1, self.height*self.width))

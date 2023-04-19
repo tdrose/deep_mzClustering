@@ -1,12 +1,6 @@
-import numpy as np
-import torch
 import torch.nn as nn
-import torchvision.models as models
-import numpy as np
-from torch.autograd import Variable
-import torch.nn.functional as F
+import torch.nn.functional as functional
 import math
-import torchvision.transforms as transforms
 
 
 def conv2d_hout(height, padding, dilation, kernel_size, stride):
@@ -41,11 +35,13 @@ class CAE(nn.Module):
         self.d1, self.d2 = 8, 16
 
         # encoder
-        self.conv1 = nn.Sequential(nn.Conv2d(1, self.d1, kernel_size=self.k1, stride=self.s1, padding=(0, 0), dilation=(1, 1),
+        self.conv1 = nn.Sequential(nn.Conv2d(1, self.d1, kernel_size=self.k1, stride=self.s1, padding=(0, 0),
+                                             dilation=(1, 1),
                                              bias=False),
                                    nn.BatchNorm2d(self.d1, momentum=0.01),
                                    nn.ReLU())
-        self.conv2 = nn.Sequential(nn.Conv2d(self.d1, self.d2, kernel_size=self.k2, stride=self.s2, padding=(0, 0), bias=False),
+        self.conv2 = nn.Sequential(nn.Conv2d(self.d1, self.d2, kernel_size=self.k2, stride=self.s2, padding=(0, 0),
+                                             bias=False),
                                    nn.BatchNorm2d(self.d2, momentum=0.01),
                                    nn.ReLU())
 
@@ -88,7 +84,8 @@ class CAE(nn.Module):
         #                                  nn.Sigmoid()
         #                                  )
 
-        # self.conv_trans3 = nn.Sequential(nn.ConvTranspose2d(in_channels=8, out_channels=1, kernel_size=self.k3, stride = self.s3, padding = (0,0)),
+        # self.conv_trans3 = nn.Sequential(nn.ConvTranspose2d(in_channels=8, out_channels=1, kernel_size=self.k3,
+        #                                  stride = self.s3, padding = (0,0)),
         #                                  nn.BatchNorm2d(1, momentum = 0.01),
         #                                  nn.Sigmoid()
         #                                  )
@@ -121,7 +118,7 @@ class CAE(nn.Module):
         z = z.view(-1, 16, self.l2height, self.l2width)
         z = self.convtrans1(z, output_size=(self.l1height, self.l1width))
         z = self.convtrans2(z, output_size=(self.height, self.width))
-        z = F.interpolate(z, size=(self.height, self.width), mode='bilinear')
+        z = functional.interpolate(z, size=(self.height, self.width), mode='bilinear')
         return z
 
     def forward(self, x):

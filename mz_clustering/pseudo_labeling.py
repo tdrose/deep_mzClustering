@@ -17,6 +17,10 @@ def run_knn(features, k=10):
     return make_symmetric(adj)
 
 
+def same_ion_matrix():
+    pass
+
+
 def pseudo_labeling(ub: float, lb: float,
                     sim: torch.tensor,
                     index, knn: bool, knn_adj=None) -> Tuple[torch.tensor, torch.tensor]:

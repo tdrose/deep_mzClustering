@@ -10,7 +10,7 @@ from .pseudo_labeling import pseudo_labeling, run_knn
 
 class Clustering(object):
     def __init__(self, images, label_path=None, num_cluster=7, height=40, width=40, lr=0.0001,
-                 batch_size=128, knn=True, k=10, use_gpu=True):
+                 batch_size=128, knn=True, k=10, use_gpu=True, random_seed=1224):
         super(Clustering, self).__init__()
         # self.spec_path = spec_path
         self.label_path = label_path
@@ -27,6 +27,7 @@ class Clustering(object):
         self.use_gpu = use_gpu
         self.image_label = None
 
+        self.random_seed = random_seed
         self.device = torch.device("cuda" if use_gpu else "cpu")
 
         # self.spec = np.genfromtxt(self.spec_path, delimiter=' ')
@@ -84,11 +85,10 @@ class Clustering(object):
         ll = 46
         loss_list = list()
 
-        random_seed = 1224
-        torch.manual_seed(random_seed)
+        torch.manual_seed(self.random_seed)
         if self.use_gpu:
-            torch.cuda.manual_seed(random_seed)
-            torch.backends.cudnn.deterministic = True
+            torch.cuda.manual_seed(self.random_seed)
+            torch.backends.cudnn.deterministic = True # noqa
 
         # Pretraining of CAE only
         for epoch in range(0, 11):
